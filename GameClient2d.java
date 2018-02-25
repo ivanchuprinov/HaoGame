@@ -98,50 +98,68 @@ public class GameClient2d extends JFrame {
 	}
 
 	public static void main(String[] args) {
+		
+		
 		EventQueue.invokeLater(new Runnable() {
+			int level = 0;
+			
 			@Override
 			public void run() {
-				
-				
-				int level = 0;
-				GameBuilder gam = new GameBuilder();
-				char[][] map = gam.getGame().getMap();
-				
-				GameClient2d ex = new GameClient2d(map);
-				ex.setVisible(true);
-				boolean wonLevel = false;
-				
-				JButton left = new JButton("Turn left");
-				JButton right = new JButton("Turn right");
-				JButton move = new JButton("Jump forward");
-				JTextField tf = new JTextField();  
-				tf.setBounds(50,520, 150,20);
-				left.setBounds(50,560,90,45);
-				left.addActionListener(new ActionListener(){
-				public void actionPerformed(ActionEvent e){
-						gam.turn("left");
-					}
-				});
-				move.setBounds(160,560,130,45);
-				move.addActionListener(new ActionListener(){
-				public void actionPerformed(ActionEvent e){
-						gam.move();
-					}
-				});
-				right.setBounds(310,560,90,45);
-				right.addActionListener(new ActionListener(){
-				public void actionPerformed(ActionEvent e){
-						gam.turn("right");
-					}
-				});
-				
-				ex.add(left);
-				ex.add(move);
-				ex.add(right);
-				ex.add(tf);
-				ex.setSize(712,912);
-				ex.setLayout(null);
-				ex.setVisible(true);
+				try{
+					GameBuilder gam = new GameBuilder(level);
+					char[][] map = gam.getGame().getMap();
+					
+					GameClient2d ex = new GameClient2d(map);
+					ex.setVisible(true);
+					boolean wonLevel = false;
+					
+					JButton left = new JButton("Turn left");
+					JButton right = new JButton("Turn right");
+					JButton move = new JButton("Jump forward");
+					JTextField tf = new JTextField();  
+					tf.setBounds(50,520, 412,20);
+					left.setBounds(50,560,90,45);
+					left.addActionListener(new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+							gam.turn("left");
+							tf.setText("Left turn successful.");
+						}
+					});
+					move.setBounds(191,560,130,45);
+					move.addActionListener(new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+							int status = gam.move();
+							if(status == 1){
+								tf.setText("Level complete!");
+								level++;
+								ex.dispose();
+								run();
+							}else if(status == 0)
+								tf.setText("Move forward successful.");
+							else
+								tf.setText("Cannot move forward.");
+						}
+					});
+					right.setBounds(372,560,90,45);
+					right.addActionListener(new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+							gam.turn("right");
+							tf.setText("Right turn successful.");
+						}
+					});
+					
+					ex.add(left);
+					ex.add(move);
+					ex.add(right);
+					ex.add(tf);
+					ex.setSize(528,670);
+					ex.setLayout(null);
+					ex.setVisible(true);
+				}
+				catch(ArrayIndexOutOfBoundsException e){
+					System.out.println("Congrats! You've won. Thanks for playing.");
+					System.exit(0);
+				}
 			}
 		});
 		

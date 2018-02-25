@@ -153,7 +153,7 @@ public class Game{
 				default:
 					throw new IllegalArgumentException("Something's wrong with your direction: " + direction);
 			}
-			System.out.println("Move forward successful:");
+			System.out.println("Move forward successful.");
 			return 0;
 		}
 		else if(tileInFront() == 'E'){
@@ -161,7 +161,7 @@ public class Game{
 			return 1;
 		}
 		else{
-			System.out.println("Cannot move forward:");
+			System.out.println("Cannot move forward.");
 			return -1;
 		}
 	}
