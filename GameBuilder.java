@@ -1,6 +1,7 @@
 public class GameBuilder{
 	private int level;
 	private Game game;
+	//Contains 64-character level layouts as a String
 	private static String[] mapSeedDB = {"*******************  ****** *****   ****************************",
 	"*******************  ****   ******* *****   ********************",
 	"**********  ******* ***** * * ***   *******  **** **************"};
@@ -70,10 +71,8 @@ public class GameBuilder{
 		return new Game(map, playerPos, direction, exit);
 	}
 	
-	public void printGame(){
-		game.printGame();
-	}
 	
+	//Turns a 64-char String into a 2d array of chars
 	private static char[][] seedToMap(String seed){
 		
 		if(seed.length() != 64)
@@ -89,6 +88,11 @@ public class GameBuilder{
 			}
 			return result;
 		}
+	}
+	
+	//Shortcuts to Game methods
+	public void printGame(){
+		game.printGame();
 	}
 	
 	public int move(){

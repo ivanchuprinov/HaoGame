@@ -1,9 +1,13 @@
+/* Game.java
+ * Contains the level layout with the player position and direction as well as the exit coordinates.
+ * Contains methods for making a turn, taking a step forward
+ */
 public class Game{
 
 	private char[][] map;
 	private int[] playerPos;	// 0 - x index (int), 1 - y index (int)
 	private char direction;		// can be ^, <, >, V
-	private int[] exit;	// 0 - x index, 1 - y index
+	private int[] exit;			// 0 - x index, 1 - y index
 
 	
 	//Constructors:
@@ -38,7 +42,7 @@ public class Game{
 	public int[] getExit(){return exit;}
 	
 	//Plant player and exit on the map
-	public void plant(){
+	private void plant(){
 		if(map[playerPos[0]][playerPos[1]] != '*' && map[exit[0]][exit[1]] != '*'){
 			map[playerPos[0]][playerPos[1]] = direction;
 			map[exit[0]][exit[1]] = 'E';
@@ -57,6 +61,7 @@ public class Game{
 		}
 	}
 	
+	//Make a turn
 	public void turn(String dir){
 		if(dir.equalsIgnoreCase("left")){
 			switch(direction){
@@ -104,9 +109,10 @@ public class Game{
 		}
 		else
 			throw new IllegalArgumentException("Invalid command: turn " + dir);
-		System.out.println("Turn " + dir + " complete:");
+		//System.out.println("Turn " + dir + " complete:");
 	}
 	
+	//Returns the tile that is in front of player
 	public char tileInFront(){
 		try{
 			switch(direction){
@@ -127,6 +133,7 @@ public class Game{
 		}
 	}
 
+	//Step forward
 	public int move(){
 		if(tileInFront() == ' '){
 			switch(direction){
@@ -153,15 +160,15 @@ public class Game{
 				default:
 					throw new IllegalArgumentException("Something's wrong with your direction: " + direction);
 			}
-			System.out.println("Move forward successful.");
+			//System.out.println("Move forward successful.");
 			return 0;
 		}
 		else if(tileInFront() == 'E'){
-			System.out.println("Level complete!");
+			//System.out.println("Level complete!");
 			return 1;
 		}
 		else{
-			System.out.println("Cannot move forward.");
+			//System.out.println("Cannot move forward.");
 			return -1;
 		}
 	}
